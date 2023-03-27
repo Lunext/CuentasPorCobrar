@@ -21,7 +21,7 @@ public partial class CuentasporcobrardbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=cuentasporcobrardb;Username=postgres;Password=Euren002");
+        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=cuentasporcobrar;Integrated Security=true; MultipleActiveResultsets=true;TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

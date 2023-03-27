@@ -2,6 +2,7 @@
 using CuentasPorCobrar.Shared;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using static System.Console;
 
@@ -10,8 +11,20 @@ namespace API.Extensions;
 
 public static class ApplicationServicesExtension
 {
-  public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
+    
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
+
+        //services.AddCuentasContext();
+
+        services.AddDbContext<CuentasporcobrardbContext>(options => {
+           
+
+            options.UseSqlServer(config.GetConnectionString("DB_CONNECTION_STRING"));
+
+
+            //  options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        });
 
         services.AddControllers(options =>
         {
@@ -47,7 +60,7 @@ public static class ApplicationServicesExtension
         services.AddCors(opt => {
             opt.AddPolicy("CorsPolicy", policy => {
                 policy
-                 .WithOrigins("http://localhost:5173").
+                 .WithOrigins("http://127.0.0.1:5173/").
                  AllowAnyHeader()
                 .AllowAnyMethod();
                // .AllowCredentials();
@@ -62,8 +75,7 @@ public static class ApplicationServicesExtension
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         //builder.Services.AddEndpointsApiExplorer();
-        // services.AddSwaggerGen();
-        services.AddCuentasContext();
+     
 
         //services.AddControllers(options =>
         //{

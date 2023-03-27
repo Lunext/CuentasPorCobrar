@@ -14,6 +14,7 @@ using API.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 
+
 builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
@@ -35,9 +36,10 @@ if (app.Environment.IsDevelopment())
 }
 
 
+
 app.UseHttpsRedirection();
 
-builder.WebHost.UseUrls("https://localhost:5002/");
+
 
 //app.UseCors(configurePolicy: options =>
 //{

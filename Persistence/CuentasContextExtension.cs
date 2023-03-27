@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CuentasPorCobrar.Shared; 
@@ -16,16 +17,15 @@ public static class CuentasContextExtension
     /// </param>
     /// <returns> An IServiceCollection that can be used to add more services</returns>
     /// 
-
-    public static IServiceCollection AddCuentasContext(this IServiceCollection services,
-        string connectionString= "Host=localhost;Port=5432;Database=cuentasporcobrardb;Username=postgres;Password=Euren002")
-    {
-        services.AddDbContext<CuentasporcobrardbContext>(options => {
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-            options.UseNpgsql(connectionString);
-          //  options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-            });
-        return services; 
-    }
+   
+    //public static IServiceCollection AddCuentasContext(this IServiceCollection services)
+    //{
+    //    services.AddDbContext<CuentasporcobrardbContext>(options => {
+    //    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    //    options.UseNpgsql(config.GetConnectionString("DB_CONNECTION_STRING"));
+    //      //  options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+    //        });
+    //    return services; 
+    //}
 }
 

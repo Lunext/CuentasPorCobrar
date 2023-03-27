@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -16,12 +15,12 @@ namespace Persistence.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Identification = table.Column<string>(type: "text", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Identification = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreditLimit = table.Column<decimal>(type: "money", nullable: false),
-                    State = table.Column<int>(type: "integer", nullable: true)
+                    State = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,11 +31,11 @@ namespace Persistence.Migrations
                 name: "Documents",
                 columns: table => new
                 {
-                    DocumentId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    LedgerAccount = table.Column<int>(type: "integer", nullable: false),
-                    State = table.Column<int>(type: "integer", nullable: true)
+                    DocumentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LedgerAccount = table.Column<int>(type: "int", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,15 +46,15 @@ namespace Persistence.Migrations
                 name: "AccountingEntries",
                 columns: table => new
                 {
-                    AccountingEntryId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    CustomerId = table.Column<int>(type: "integer", nullable: true),
-                    Account = table.Column<int>(type: "integer", nullable: false),
-                    MovementType = table.Column<int>(type: "integer", nullable: true),
-                    AccountEntryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    AccountEntryAmount = table.Column<decimal>(type: "numeric", nullable: false),
-                    State = table.Column<int>(type: "integer", nullable: true)
+                    AccountingEntryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
+                    Account = table.Column<int>(type: "int", nullable: false),
+                    MovementType = table.Column<int>(type: "int", nullable: true),
+                    AccountEntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AccountEntryAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,15 +70,15 @@ namespace Persistence.Migrations
                 name: "Transactions",
                 columns: table => new
                 {
-                    TransactionId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MovementType = table.Column<int>(type: "integer", nullable: true),
-                    DocumentId = table.Column<int>(type: "integer", nullable: true),
-                    DocumentNumber = table.Column<Guid>(type: "uuid", nullable: true),
-                    TransactionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CustomerId = table.Column<int>(type: "integer", nullable: true),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
-                    AccountingEntryId = table.Column<int>(type: "integer", nullable: true)
+                    TransactionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MovementType = table.Column<int>(type: "int", nullable: true),
+                    DocumentId = table.Column<int>(type: "int", nullable: true),
+                    DocumentNumber = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AccountingEntryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
