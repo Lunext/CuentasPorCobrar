@@ -38,6 +38,13 @@ public class TransactionController : ControllerBase
         return transaction is null ? NotFound() : Ok(transaction);
     }
 
+    [HttpGet("GetByDates", Name = nameof(GetTransactionsByDate))]
+    [ProducesResponseType(200, Type =typeof(Transaction))]
+    [ProducesResponseType(404)]
+    public async Task<IEnumerable<Transaction>> GetTransactionsByDate(DateTime firstDate, DateTime lastDate)
+    {
+        return await repo.RetrieveFilterDate(firstDate, lastDate);
+    }
     //Create a new Transaction
     //POST: api/transactions/[id]
     [HttpPost]
@@ -104,4 +111,5 @@ public class TransactionController : ControllerBase
             new NoContentResult()
             : BadRequest($"Transaction number {id} was found but failed to delete.");
     }
+
 }

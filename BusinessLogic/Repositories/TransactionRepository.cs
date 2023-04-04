@@ -113,5 +113,13 @@ public class TransactionRepository : ITransactionRepository
         }
     }
 
-   
+    public async Task<IEnumerable<Transaction>> RetrieveFilterDate(DateTime firstDate, DateTime lastDate)
+    {
+        var dateRes = await context.Transactions
+                        .Where(x => x.TransactionDate.Date >= firstDate 
+                        && x.TransactionDate.Date <= lastDate)
+                        .ToListAsync();
+        return dateRes;
+    }
+
 }

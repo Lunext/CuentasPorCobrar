@@ -11,5 +11,5 @@ public interface ITransactionRepository
     Task<Transaction?> RetrieveByIdAsync(int id);
     Task<Transaction?> UpdateAsync(int id, Transaction transaction);
     Task<bool?> DeleteAsync(int id);
-    
+    Task<IEnumerable<Transaction>> RetrieveFilterDate(DateTime firstDate, DateTime lastDate);
 }
