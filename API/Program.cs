@@ -25,7 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(doc =>
     {
-        doc.SwaggerEndpoint("/swagger/v1/swagger.json", "Cuentas por Cobrar Service API Version 1");
+        //c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cuentas por Cobrar Service API Version 1");
 
         doc.SupportedSubmitMethods(new[]
         {

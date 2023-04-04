@@ -149,7 +149,8 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
                         .WithMany("AccountingEntries")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Customer");
                 });
@@ -162,11 +163,13 @@ namespace Persistence.Migrations
 
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
                         .WithMany("Transactions")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CuentasPorCobrar.Shared.Document", "Document")
                         .WithMany("Transactions")
-                        .HasForeignKey("DocumentId");
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("AccountingEntry");
 

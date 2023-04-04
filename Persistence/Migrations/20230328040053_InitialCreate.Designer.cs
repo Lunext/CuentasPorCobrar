@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CuentasporcobrardbContext))]
-    [Migration("20230325032828_InitialCreate")]
+    [Migration("20230328040053_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -152,7 +152,8 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
                         .WithMany("AccountingEntries")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Customer");
                 });
@@ -165,11 +166,13 @@ namespace Persistence.Migrations
 
                     b.HasOne("CuentasPorCobrar.Shared.Customer", "Customer")
                         .WithMany("Transactions")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CuentasPorCobrar.Shared.Document", "Document")
                         .WithMany("Transactions")
-                        .HasForeignKey("DocumentId");
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("AccountingEntry");
 

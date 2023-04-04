@@ -16,51 +16,32 @@ public static class ApplicationServicesExtension
     {
 
         //services.AddCuentasContext();
+       
+         services.AddDbContext<CuentasporcobrardbContext>(options => {
 
-        services.AddDbContext<CuentasporcobrardbContext>(options => {
+
+
+                options.UseSqlServer(config.GetConnectionString("PRODUCTION"));
+
+
+                //  options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
            
-
-            options.UseSqlServer(config.GetConnectionString("DB_CONNECTION_STRING"));
-
-
-            //  options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-        });
+        
 
         services.AddControllers(options =>
-        {
-            WriteLine("Default ouput formatters:");
-            //foreach (IOutputFormatter formatter in options.OutputFormatters)
-            //{
-            //    OutputFormatter? mediaFormatter = formatter as OutputFormatter;
-            //    if (mediaFormatter is null)
-            //    {
-            //        WriteLine($" {formatter.GetType().Name}");
-            //    }
-            //    else //OutputFormatter class has SupportedMediaTypes
-            //    {
-            //        WriteLine(" {0}, Media types: {1}",
-            //            mediaFormatter.GetType().Name,
-            //            string.Join(", ",
-            //            mediaFormatter.SupportedMediaTypes));
-
-            //    }
-            //}
-
-        }).
+        {}).
             AddJsonOptions(o =>
             {
                 o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
             }).AddNewtonsoftJson(options =>
-       options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-
-
-    );
+       options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         // Add services to the container.
         services.AddCors(opt => {
             opt.AddPolicy("CorsPolicy", policy => {
                 policy
-                 .WithOrigins("http://127.0.0.1:5173/").
+                 .WithOrigins("https://cuentas-por-cobrar-frontend.azurewebsites.net").
                  AllowAnyHeader()
                 .AllowAnyMethod();
                // .AllowCredentials();
@@ -71,37 +52,7 @@ public static class ApplicationServicesExtension
         });
 
         
-       
-
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        //builder.Services.AddEndpointsApiExplorer();
-     
-
-        //services.AddControllers(options =>
-        //{
-        //    WriteLine("Default ouput formatters:");
-        //    foreach (IOutputFormatter formatter in options.OutputFormatters)
-        //    {
-        //        OutputFormatter? mediaFormatter = formatter as OutputFormatter;
-        //        if (mediaFormatter is null)
-        //        {
-        //            WriteLine($" {formatter.GetType().Name}");
-        //        }
-        //        else //OutputFormatter class has SupportedMediaTypes
-        //        {
-        //            WriteLine(" {0}, Media types: {1}",
-        //                mediaFormatter.GetType().Name,
-        //                string.Join(", ",
-        //                mediaFormatter.SupportedMediaTypes));
-
-        //        }
-        //    }
-        //});
-            
-
-        //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<WeatherForecastValidator>());
-
-
+  
         services.AddEndpointsApiExplorer();
 
 
