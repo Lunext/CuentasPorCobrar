@@ -18,9 +18,11 @@ public class TransactionRepository : ITransactionRepository
         }
     }
 
-    public Task<IEnumerable<Transaction>> RetrieveAllAsync()
+    public async Task<IEnumerable<Transaction>> RetrieveAllAsync()
     {
-        return Task.FromResult
+        await GetCustomers();
+        await GetDocuments();
+        return await Task.FromResult
             (transactionCache is null ? Enumerable.Empty<Transaction>()
             : transactionCache.Values);
     }

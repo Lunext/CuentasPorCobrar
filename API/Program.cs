@@ -14,6 +14,7 @@ using API.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 
+
 builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
@@ -24,7 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(doc =>
     {
-        doc.SwaggerEndpoint("/swagger/v1/swagger.json", "Cuentas por Cobrar Service API Version 1");
+        //c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cuentas por Cobrar Service API Version 1");
 
         doc.SupportedSubmitMethods(new[]
         {
@@ -35,9 +36,10 @@ if (app.Environment.IsDevelopment())
 }
 
 
+
 app.UseHttpsRedirection();
 
-builder.WebHost.UseUrls("https://localhost:5002/");
+
 
 //app.UseCors(configurePolicy: options =>
 //{
@@ -48,9 +50,9 @@ builder.WebHost.UseUrls("https://localhost:5002/");
 
 //app.UseMiddleware<SecurityHeaders>();
 
-
-app.UseAuthorization();
 app.UseCors("CorsPolicy");
+app.UseAuthorization();
+
 
 
 

@@ -12,8 +12,6 @@ public class AccountingEntriesValidator:AbstractValidator<AccountingEntry>
         RuleFor(a => a.Description)
             .NotEmpty()
             .WithMessage("It cannot be empty")
-            .MinimumLength(15)
-            .WithMessage("It cannot be less than 15 digits")
             .MaximumLength(150)
             .WithMessage("It cannot be greater than 150 digits")
             ;

@@ -21,19 +21,17 @@ public class Transaction
 
 
 
-
     public Guid? DocumentNumber { get; set; }
 
-    
     public DateTime TransactionDate { get; set; }
-
 
     public int? CustomerId { get; set; }
     public virtual Customer? Customer { get; set; }
 
-   
-    
     public decimal Amount { get; set; }
+
+    public int? AccountingEntryId { get; set; } = null; 
+    public virtual AccountingEntry? AccountingEntry { get; set; }
 
     
 }

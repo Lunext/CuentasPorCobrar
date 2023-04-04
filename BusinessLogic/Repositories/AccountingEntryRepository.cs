@@ -32,14 +32,14 @@ public class AccountingEntryRepository : IAccountingEntryRepository
     }
 
 
-    public Task<IEnumerable<AccountingEntry>> RetrieveAllAsync()
+    public async Task<IEnumerable<AccountingEntry>> RetrieveAllAsync()
     {
 
         //for performance get from cache 
 
-        
 
-        return Task.FromResult
+        await GetCustomers();
+        return await Task.FromResult
             (accountingCache is null ?
             Enumerable.Empty<AccountingEntry>()
             : accountingCache.Values); 
