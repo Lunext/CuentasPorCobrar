@@ -1,4 +1,5 @@
 ﻿
+using BusinessLogic.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -6,7 +7,7 @@ using System.Collections.Concurrent;
 
 namespace CuentasPorCobrar.Shared;
 
-public class AccountingEntryRepository : IAccountingEntryRepository
+public class AccountingEntryRepository : IRepository<AccountingEntry>
 {
     //Use a static thread safe dictionary field to cache the customer 
 

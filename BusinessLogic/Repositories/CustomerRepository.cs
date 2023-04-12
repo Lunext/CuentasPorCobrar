@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using BusinessLogic.Repositories;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
 
 namespace CuentasPorCobrar.Shared;
 
-public class CustomerRepository : ICustomerRepository
+public class CustomerRepository : IRepository<Customer>
 {
     private static ConcurrentDictionary<int, Customer>? customerCache;
 
@@ -27,7 +28,7 @@ public class CustomerRepository : ICustomerRepository
             : customerCache.Values);
     }
 
-    public Task<Customer?> RetrieveByIdAsync(int id)
+    public Task<Customer?> RetrieveAsync(int id)
     {
         if (customerCache is null) return null!;
 

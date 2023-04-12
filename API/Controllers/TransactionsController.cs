@@ -1,5 +1,5 @@
 ﻿using API.Middleware;
-
+using BusinessLogic.Repositories;
 using CuentasPorCobrar.Shared;
 using FluentValidation;
 using FluentValidation.Results;
@@ -12,12 +12,14 @@ namespace API.Controllers;
 [ApiController]
 public class TransactionController : ControllerBase
 {
-    private readonly ITransactionRepository repo; 
+    private readonly IRepository<Transaction> repo;
+    private readonly IFilterRepository<Transaction> filterRepo;
     private readonly IValidator<Transaction> validator; 
     
-    public TransactionController(ITransactionRepository repo, IValidator<Transaction> validator)
+    public TransactionController(IRepository<Transaction> repo,IFilterRepository<Transaction> filterRepo, IValidator<Transaction> validator)
     {
         this.repo = repo;
+        this.filterRepo = filterRepo;
         this.validator = validator;
     }
 
@@ -34,7 +36,7 @@ public class TransactionController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetTransactionByID(int id)
     {
-        Transaction? transaction = await repo.RetrieveByIdAsync(id);
+        Transaction? transaction = await repo.RetrieveAsync(id);
         return transaction is null ? NotFound() : Ok(transaction);
     }
 
@@ -43,8 +45,10 @@ public class TransactionController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IEnumerable<Transaction>> GetTransactionsByDate(DateTime firstDate, DateTime lastDate)
     {
-        return await repo.RetrieveFilterDate(firstDate, lastDate);
+        return await filterRepo.RetrieveFilterDate(firstDate, lastDate)!;
     }
+
+
     //Create a new Transaction
     //POST: api/transactions/[id]
     [HttpPost]
@@ -87,7 +91,7 @@ public class TransactionController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        Transaction? existing = await repo.RetrieveByIdAsync(id);
+        Transaction? existing = await repo.RetrieveAsync(id);
 
         if(existing is null) return NotFound();
         await repo.UpdateAsync(id, transaction);
@@ -102,7 +106,7 @@ public class TransactionController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(int id)
     {
-        Transaction? existing = await repo.RetrieveByIdAsync(id);
+        Transaction? existing = await repo.RetrieveAsync(id);
         if (existing is null) return NotFound();
 
         bool? deleted = await repo.DeleteAsync(id);

@@ -1,11 +1,12 @@
-﻿using FluentValidation;
+﻿using BusinessLogic.Repositories;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
 
 
 namespace CuentasPorCobrar.Shared;
 
-public class DocumentRepository: IDocumentRepository
+public class DocumentRepository: IRepository<Document>
 {
     //Use a static thread safe dictionary field to cache the customer 
 

@@ -5,6 +5,7 @@ using CuentasPorCobrar.Shared;
 using FluentValidation;
 using FluentValidation.Results;
 using API.Middleware;
+using BusinessLogic.Repositories;
 
 namespace API.Controllers;
 
@@ -12,11 +13,11 @@ namespace API.Controllers;
 [ApiController]
 public class CustomersController : ControllerBase
 {
-    private readonly ICustomerRepository repo;
+    private readonly IRepository<Customer> repo;
     private readonly IValidator<Customer> _validator;
      
 
-    public CustomersController(ICustomerRepository repo, IValidator<Customer> _validator)
+    public CustomersController(IRepository<Customer> repo, IValidator<Customer> _validator)
     {
       
         this.repo = repo;
@@ -40,7 +41,7 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetCustomerByID(int id)
     {
-        Customer? customer = await repo.RetrieveByIdAsync(id);
+        Customer? customer = await repo.RetrieveAsync(id);
 
         return customer is null ? NotFound() : Ok(customer);
     }
@@ -91,7 +92,7 @@ public class CustomersController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        Customer? existing = await repo.RetrieveByIdAsync(id);
+        Customer? existing = await repo.RetrieveAsync(id);
 
         if (existing is null) return NotFound();
         await repo.UpdateAsync(id, customer);
@@ -106,7 +107,7 @@ public class CustomersController : ControllerBase
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(int id)
     {
-        Customer? existing = await repo.RetrieveByIdAsync(id);
+        Customer? existing = await repo.RetrieveAsync(id);
         if(existing is null) return NotFound();
 
         bool? deleted = await repo.DeleteAsync(id);

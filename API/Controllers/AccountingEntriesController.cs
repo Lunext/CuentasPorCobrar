@@ -5,6 +5,7 @@ using CuentasPorCobrar.Shared;
 using FluentValidation.Results;
 using FluentValidation;
 using API.Middleware;
+using BusinessLogic.Repositories;
 
 namespace API.Controllers;
 
@@ -12,13 +13,13 @@ namespace API.Controllers;
 [ApiController]
 public class AccountingEntriesController : ControllerBase
 {
-    private readonly IAccountingEntryRepository repo;
+    private readonly IRepository<AccountingEntry> repo;
     private readonly IValidator<AccountingEntry> validator;
 
 
     //constructor injects repository registered in Program 
 
-    public AccountingEntriesController(IAccountingEntryRepository repo, 
+    public AccountingEntriesController(IRepository<AccountingEntry> repo, 
         IValidator<AccountingEntry> validator)
     {
         this.repo=repo;

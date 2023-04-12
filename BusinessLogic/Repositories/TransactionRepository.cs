@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BusinessLogic.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Concurrent;
 
 namespace CuentasPorCobrar.Shared;
 
-public class TransactionRepository : ITransactionRepository
+public class TransactionRepository : IRepository<Transaction>, IFilterRepository<Transaction>
 {
     private static ConcurrentDictionary<int, Transaction>? transactionCache;
     private CuentasporcobrardbContext context;
@@ -26,7 +27,7 @@ public class TransactionRepository : ITransactionRepository
             (transactionCache is null ? Enumerable.Empty<Transaction>()
             : transactionCache.Values);
     }
-    public Task<Transaction?> RetrieveByIdAsync(int id)
+    public Task<Transaction?> RetrieveAsync(int id)
     {
         if (transactionCache is null) return null!; 
         transactionCache.TryGetValue(id, out Transaction? transaction);
@@ -121,6 +122,9 @@ public class TransactionRepository : ITransactionRepository
                         .Where(x => x.TransactionDate.Date >= firstDate 
                         && x.TransactionDate.Date <= lastDate)
                         .ToListAsync();
+
+        await GetCustomers();
+        await GetDocuments();
         return dateRes;
     }
 

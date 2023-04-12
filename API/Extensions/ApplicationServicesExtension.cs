@@ -1,4 +1,5 @@
 ﻿
+using BusinessLogic.Repositories;
 using CuentasPorCobrar.Shared;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -66,10 +67,12 @@ public static class ApplicationServicesExtension
 
 
         });
-        services.AddScoped<IDocumentRepository, DocumentRepository>();
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IAccountingEntryRepository, AccountingEntryRepository>();
-        services.AddScoped<ITransactionRepository, TransactionRepository>();
+        services.AddScoped<IRepository<Document>, DocumentRepository>();
+        services.AddScoped<IRepository<Customer>, CustomerRepository>();
+        services.AddScoped<IRepository<AccountingEntry> , AccountingEntryRepository>();
+        services.AddScoped<IFilterRepository<Transaction>, TransactionRepository>();
+        services.AddScoped<IRepository<Transaction>, TransactionRepository>();
+       
 
         services.AddScoped<IValidator<Document>, DocumentValidator>();
         services.AddScoped<IValidator<AccountingEntry>, AccountingEntriesValidator>();
