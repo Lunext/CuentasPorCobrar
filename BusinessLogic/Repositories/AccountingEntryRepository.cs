@@ -3,7 +3,9 @@ using BusinessLogic.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 using System.Collections.Concurrent;
+using System.Net.Http.Headers;
 
 namespace CuentasPorCobrar.Shared;
 
@@ -17,6 +19,8 @@ public class AccountingEntryRepository : IRepository<AccountingEntry>
     /*Use an instance of data context field because it should not
      be cached due to their internal caching
     */
+
+    private const string URL_API = "https://contabilidadapi.azurewebsites.net/api_aux/SistCont/";
 
 
     private CuentasporcobrardbContext db; 
@@ -44,9 +48,6 @@ public class AccountingEntryRepository : IRepository<AccountingEntry>
             (accountingCache is null ?
             Enumerable.Empty<AccountingEntry>()
             : accountingCache.Values); 
-
-        
-
     }
 
     public  Task<AccountingEntry?> RetrieveAsync(int id)
@@ -59,6 +60,7 @@ public class AccountingEntryRepository : IRepository<AccountingEntry>
         accountingCache.TryGetValue(id, out AccountingEntry? accountingEntry);
         return Task.FromResult(accountingEntry); 
     }
+
 
 
     public async Task<AccountingEntry?> CreateAsync(AccountingEntry accountingEntry)
@@ -126,6 +128,7 @@ public class AccountingEntryRepository : IRepository<AccountingEntry>
         }
         return null; 
     }
+    
 
 
     public async Task<bool?> DeleteAsync(int id)

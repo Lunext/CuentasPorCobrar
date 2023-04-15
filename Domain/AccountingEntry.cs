@@ -12,6 +12,8 @@ public class AccountingEntry
     public int AccountingEntryId { get; set; }
 
     
+    
+    
     public string? Description { get; set; }
 
 
@@ -24,15 +26,15 @@ public class AccountingEntry
     public virtual  Customer? Customer { get; set; }
 
 
-    
-    
+
+    public string? id_EC { get; set; }
     public int Account { get; set; }
 
 
     public MovementTypes? MovementType { get; set; } 
 
     
-    public DateTime AccountEntryDate { get; set; }
+    public DateTime AccountEntryDate { get; set; }= DateTime.Now;
 
    
     public decimal AccountEntryAmount { get; set;}
