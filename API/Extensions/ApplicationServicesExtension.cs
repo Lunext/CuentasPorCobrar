@@ -42,7 +42,7 @@ public static class ApplicationServicesExtension
         services.AddCors(opt => {
             opt.AddPolicy("CorsPolicy", policy => {
                 policy
-                 .WithOrigins("https://cuentas-por-cobrar-frontend.azurewebsites.net").
+                 .AllowAnyOrigin().
                  AllowAnyHeader()
                 .AllowAnyMethod();
                // .AllowCredentials();

@@ -30,7 +30,7 @@ public class Transaction
 
     public decimal Amount { get; set; }
 
-    public string? AccountingEntryId { get; set; } = null; 
+    public int? AccountingEntryId { get; set; } = null; 
     public virtual AccountingEntry? AccountingEntry { get; set; }
 
     

@@ -1,10 +1,14 @@
 ﻿using API.Middleware;
 using BusinessLogic.Repositories;
 using CuentasPorCobrar.Shared;
+using Domain;
 using FluentValidation;
 using FluentValidation.Results;
 
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace API.Controllers;
 
@@ -114,6 +118,29 @@ public class TransactionController : ControllerBase
         return deleted.HasValue && deleted.Value ?
             new NoContentResult()
             : BadRequest($"Transaction number {id} was found but failed to delete.");
+    }
+
+    [HttpPost]
+    [Route("accountingentry")]
+    public async Task<ContentResult> PostAccountingEntry(AccountingEntryDTO accounting)
+    {
+        var content = JsonConvert.SerializeObject(accounting);
+
+        var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+        using (var client = new HttpClient())
+        {
+            client.BaseAddress = new Uri("https://contabilidadapi.azurewebsites.net");
+
+            client.DefaultRequestHeaders.Accept.Clear();
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.PostAsync("/api_aux/SistCont/", httpContent);
+
+            var result = new ContentResult { Content = response.Content.ReadAsStringAsync().Result, ContentType = "application/json" }; 
+            return result;  
+        }
     }
 
 }

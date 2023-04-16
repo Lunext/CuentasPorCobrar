@@ -10,3 +10,4 @@ public interface IFilterRepository <T>
 
     Task<IEnumerable<T>>? RetrieveFilterDate(DateTime firstDate, DateTime lastDate);
 }
+
